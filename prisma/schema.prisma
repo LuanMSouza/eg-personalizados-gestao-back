@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model imagens {
+  id         Int       @id @default(autoincrement())
+  produto_id Int?
+  tema_id    Int?
+  img_url    String?
+  produtos   produtos? @relation(fields: [produto_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  temas      temas?    @relation(fields: [tema_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([produto_id], map: "idx_produto")
+  @@index([tema_id], map: "idx_tema")
+}
+
+model produtos {
+  id          Int           @id @default(autoincrement())
+  nome        String        @db.VarChar(255)
+  preco_venda Decimal       @db.Decimal(10, 2)
+  preco_custo Decimal       @db.Decimal(10, 2)
+  imagens     imagens[]
+  venda_itens venda_itens[]
+}
+
+model temas {
+  id         Int       @id @default(autoincrement())
+  nome       String    @unique @db.VarChar(20)
+  created_at DateTime? @default(now()) @db.Date
+  imagens    imagens[]
+}
+
+model users {
+  id      Int    @id @default(autoincrement())
+  usuario String @db.VarChar(50)
+  senha   String
+}
+
+model venda_itens {
+  id             Int       @id @default(autoincrement())
+  venda_id       Int?
+  produto_id     Int?
+  quantidade     Int
+  valor_unitario Decimal   @db.Decimal(10, 2)
+  produtos       produtos? @relation(fields: [produto_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  vendas         vendas?   @relation(fields: [venda_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model vendas {
+  id                Int           @id @default(autoincrement())
+  status            String?       @default("Pendente") @db.VarChar(50)
+  valor_total       Decimal?      @db.Decimal(10, 2)
+  data_entrega      DateTime?     @db.Date
+  pago              Boolean?      @default(false)
+  created_at        DateTime?     @default(now()) @db.Timestamp(6)
+  cliente           String        @db.VarChar(30)
+  total_itens       Decimal       @db.Decimal(10, 2)
+  taxa_entrega      Decimal?      @db.Decimal(10, 2)
+  desconto_valor    Decimal?      @db.Decimal(10, 2)
+  desconto_porcento Int?          @default(0)
+  contato           BigInt?
+  endereco          String?       @db.VarChar(255)
+  obs               String?       @db.VarChar(255)
+  orcamento         Boolean?
+  validade          DateTime?     @db.Date
+  venda_itens       venda_itens[]
+}
