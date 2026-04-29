@@ -210,8 +210,8 @@
             <tr>
                 <td>{{this.nome}}</td>
                 <td style="text-align: center;">{{this.quantidade}}</td>
-                <td style="text-align: right;">R$ {{this.valor_unitario}}</td>
-                <td style="text-align: right;">R$ {{this.valor_total}}</td>
+                <td style="text-align: right;"> {{this.valor_unitario}}</td>
+                <td style="text-align: right;"> {{this.valor_total}}</td>
             </tr>
             {{/each}}
         </tbody>
@@ -220,23 +220,23 @@
     <div class="total-section">
         <div class="total-row">
             <span>Subtotal:</span>
-            <span>R$ {{valor_inicial}}</span>
+            <span> {{valor_inicial}}</span>
         </div>
         <div class="total-row" style="color: #059669;">
             <span>Desconto ({{desconto_porcentagem}}%):</span>
-            <span style="font-weight: bold;">- R$ {{valor_desconto_reais}}</span>
+            <span style="font-weight: bold;">- {{valor_desconto_reais}}</span>
         </div>
 
         {{#if cliente_endereco}}
         <div class="total-row" style="color: #dc2626;">
             <span>Taxa de entrega:</span>
-            <span style="font-weight: bold;">+ R$ {{taxa_entrega}}</span>
+            <span style="font-weight: bold;">+ {{taxa_entrega}}</span>
         </div>
         {{/if}}
 
         <div class="total-row" style="margin-top: 10px;">
             <span>Total:</span>
-            <span class="valor-final">R$ {{valor_final}}</span>
+            <span class="valor-final"> {{valor_final}}</span>
         </div>
     </div>
 

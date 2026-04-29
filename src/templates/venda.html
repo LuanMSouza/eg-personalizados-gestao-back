@@ -152,7 +152,6 @@
         <img src="{{logo_base64}}" class="logo" />
         <div class="info-venda">
             <h1 style="margin: 0; color: #1e3a8a;">RESUMO DA VENDA</h1>
-            <p style="margin: 5px 0 0 0; font-weight: bold;">ID: #{{venda_id}}</p>
             <p style="margin: 0; color: #6b7280;">Data: {{data_venda}}</p>
         </div>
     </div>
@@ -178,7 +177,7 @@
 
         <div class="card">
             <h3>📄 Informações do Pedido</h3>
-            
+
             <div class="info-item">
                 <span class="info-label">Status do Pagamento</span>
                 {{#if foi_concluido}}
@@ -217,8 +216,8 @@
             <tr>
                 <td>{{this.nome}}</td>
                 <td style="text-align: center;">{{this.quantidade}}</td>
-                <td style="text-align: right;">R$ {{this.valor_unitario}}</td>
-                <td style="text-align: right;">R$ {{this.valor_total}}</td>
+                <td style="text-align: right;"> {{this.valor_unitario}}</td>
+                <td style="text-align: right;"> {{this.valor_total}}</td>
             </tr>
             {{/each}}
         </tbody>
@@ -227,26 +226,26 @@
     <div class="total-section">
         <div class="total-row">
             <span>Subtotal:</span>
-            <span>R$ {{valor_inicial}}</span>
+            <span> {{valor_inicial}}</span>
         </div>
 
         {{#if valor_desconto_reais}}
         <div class="total-row" style="color: #166534;">
             <span>Desconto Aplicado:</span>
-            <span>- R$ {{valor_desconto_reais}}</span>
+            <span>- {{valor_desconto_reais}}</span>
         </div>
         {{/if}}
 
         {{#if taxa_entrega}}
         <div class="total-row">
             <span>Taxa de Entrega:</span>
-            <span>+ R$ {{taxa_entrega}}</span>
+            <span>+ {{taxa_entrega}}</span>
         </div>
         {{/if}}
 
         <div class="total-row">
             <span style="font-weight: bold;">TOTAL DA VENDA:</span>
-            <span class="valor-final">R$ {{valor_final}}</span>
+            <span class="valor-final"> {{valor_final}}</span>
         </div>
     </div>
 

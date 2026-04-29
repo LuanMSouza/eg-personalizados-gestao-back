@@ -3,12 +3,18 @@ import Fastify from 'fastify'
 import { FastifyRequest, FastifyReply } from 'fastify'
 import cors from '@fastify/cors'
 import jwt from '@fastify/jwt'
+import multipart from '@fastify/multipart'
 // rotas
 
 import { authRoutes } from './routes/auth'
 import { produtosRoute } from './routes/produtos'
+import { arquivosRoutes } from './routes/gerarArquivos'
+import { vendasRoutes } from './routes/vendas'
+import { imagensRoutes } from './routes/imagens'
 
 const app = Fastify({ logger: true })
+
+app.register(multipart)
 
 app.register(jwt, {
     secret: process.env.JWT_SECRET || 'uma-frase-muito-secreta-aqui'
@@ -33,6 +39,9 @@ async function start() {
 
     await app.register(authRoutes, { prefix: '/auth' })
     await app.register(produtosRoute, { prefix: '/produtos' })
+    await app.register(arquivosRoutes, { prefix: '/gerar' })
+    await app.register(vendasRoutes, { prefix: '/vendas' })
+    await app.register(imagensRoutes, { prefix: '/imagens' })
 
 
     try {

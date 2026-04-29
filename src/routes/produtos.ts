@@ -23,6 +23,19 @@ export async function produtosRoute(app: FastifyInstance) {
 
         })
 
+    app.get('/temas',
+        { onRequest: [app.authenticate] },
+        async (request, reply) => {
+
+            try {
+                const temas = await prisma.temas.findMany()
+                return reply.status(200).send({ data: temas })
+            } catch (error) {
+                return reply.status(500).send({ error: 'Erro ao procurar temas!!' })
+            }
+
+        })
+
     app.post('/',
         { onRequest: [app.authenticate], },
         async (request, reply) => {
