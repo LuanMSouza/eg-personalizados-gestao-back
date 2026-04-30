@@ -32,7 +32,11 @@ app.decorate("authenticate", async (request: FastifyRequest, reply: FastifyReply
 async function start() {
 
     await app.register(cors, {
-        origin: 'http://localhost:5173',
+        origin: [
+            'http://localhost:5173',
+            'http://gestao.egpersonalizados.com.br',
+            'https://ghestao.egpersonalizados.com.br'
+        ],
         methods: ['GET', 'POST', 'PUT', 'DELETE']
     });
 
