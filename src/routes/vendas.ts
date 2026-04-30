@@ -85,7 +85,10 @@ export async function vendasRoutes(app: FastifyInstance) {
                     where: {
                         id: Number(id)
                     },
-                    data: dadosParaAtualizar // Agora o objeto não tem mais o campo 'id'
+                    data: {
+                        ...dadosParaAtualizar,
+                        orcamento: false
+                    }
                 });
 
                 return reply.send({
