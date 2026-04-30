@@ -35,7 +35,7 @@ async function start() {
         origin: [
             'http://localhost:5173',
             'http://gestao.egpersonalizados.com.br',
-            'https://ghestao.egpersonalizados.com.br'
+            'https://gestao.egpersonalizados.com.br'
         ],
         methods: ['GET', 'POST', 'PUT', 'DELETE']
     });
@@ -54,7 +54,6 @@ async function start() {
             host: '0.0.0.0'
         })
 
-        console.log("🚀 Server running at http://localhost:3333")
     } catch (err) {
         app.log.error(err)
         process.exit(1)
