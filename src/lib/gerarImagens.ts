@@ -6,7 +6,7 @@ import puppeteer from 'puppeteer'
 type TemplateTipo = 'orcamento' | 'venda'
 
 export async function gerarImagemDocumento(tipo: TemplateTipo, dados: any) {
-    const logoPath = path.join(process.cwd(), 'public', 'newLogo.webP')
+    const logoPath = path.join(process.cwd(), 'public', 'newLogo.webp')
     const templatePath = path.join(process.cwd(), 'src', 'templates', `${tipo}.html`)
 
     const logoBuffer = fs.readFileSync(logoPath)
