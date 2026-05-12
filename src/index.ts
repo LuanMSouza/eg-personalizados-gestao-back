@@ -40,6 +40,12 @@ async function start() {
         methods: ['GET', 'POST', 'PUT', 'DELETE']
     });
 
+    app.register(require('@fastify/static'), {
+        root: '/var/www/uploads',
+        prefix: '/uploads/'
+    })
+
+
 
     await app.register(authRoutes, { prefix: '/auth' })
     await app.register(produtosRoute, { prefix: '/produtos' })
@@ -47,10 +53,6 @@ async function start() {
     await app.register(vendasRoutes, { prefix: '/vendas' })
     await app.register(imagensRoutes, { prefix: '/imagens' })
 
-    app.register(require('@fastify/static'), {
-        root: '/var/www/uploads',
-        prefix: '/uploads/'
-    })
 
 
     try {
