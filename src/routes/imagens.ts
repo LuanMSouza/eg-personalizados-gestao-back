@@ -41,8 +41,7 @@ export async function imagensRoutes(app: FastifyInstance) {
                 fs.mkdirSync(dir, { recursive: true });
                 const filePath = `${dir}/${Date.now()}-${fileName}`;
                 fs.writeFileSync(filePath, fileBuffer);
-                const publicUrl = `https://dvls.com${filePath}`;
-
+                const publicUrl = `https://api.gestao.egpersonalizados.com.br/uploads/${filePath}`;
                 let novoTema
 
                 if (tema_id === 'CRIAR' && tema_criado) {
