@@ -39,9 +39,12 @@ export async function imagensRoutes(app: FastifyInstance) {
                 const projeto = 'EGP';
                 const dir = `/var/www/uploads/${projeto}`;
                 fs.mkdirSync(dir, { recursive: true });
-                const filePath = `${dir}/${Date.now()}-${fileName}`;
-                fs.writeFileSync(filePath, fileBuffer);
-                const publicUrl = `https://api.gestao.egpersonalizados.com.br/uploads/${filePath}`;
+                const fileName2 = `${Date.now()}-${fileName}`;
+                fs.writeFileSync(`${dir}/${fileName2}`, fileBuffer);
+                const publicUrl = `https://api.gestao.egpersonalizados.com.br/uploads/${projeto}/${fileName2}`;
+
+
+
                 let novoTema
 
                 if (tema_id === 'CRIAR' && tema_criado) {
