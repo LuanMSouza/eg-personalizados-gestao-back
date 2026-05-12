@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify'
-import { supabase } from '../lib/supabase'
+import fs from 'fs'
 import { prisma } from '../../lib/prisma';
 
 export async function imagensRoutes(app: FastifyInstance) {
@@ -34,21 +34,14 @@ export async function imagensRoutes(app: FastifyInstance) {
                     return reply.status(400).send({ error: 'Arquivo ou ID do produto ausente.' });
                 }
 
-                const path = `produtos/${Date.now()}-${fileName}`;
-                const { data: storageData, error: storageError } = await supabase.storage
-                    .from('produtos') // Substitua pelo nome real do seu bucket
-                    .upload(path, fileBuffer, {
-                        contentType: mimeType,
-                        upsert: true
-                    });
+                // Alterado, vai pro VPS
 
-                if (storageError) throw storageError;
-
-                const { data: urlData } = supabase.storage
-                    .from('produtos')
-                    .getPublicUrl(path);
-
-                const publicUrl = urlData.publicUrl;
+                const projeto = 'EGP';
+                const dir = `/var/www/uploads/${projeto}`;
+                fs.mkdirSync(dir, { recursive: true });
+                const filePath = `${dir}/${Date.now()}-${fileName}`;
+                fs.writeFileSync(filePath, fileBuffer);
+                const publicUrl = `https://dvls.com${filePath}`;
 
                 let novoTema
 

@@ -47,6 +47,11 @@ async function start() {
     await app.register(vendasRoutes, { prefix: '/vendas' })
     await app.register(imagensRoutes, { prefix: '/imagens' })
 
+    app.register(require('@fastify/static'), {
+        root: '/var/www/uploads',
+        prefix: '/uploads/'
+    })
+
 
     try {
         await app.listen({
