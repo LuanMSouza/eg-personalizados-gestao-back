@@ -14,7 +14,12 @@ import { imagensRoutes } from './routes/imagens'
 
 const app = Fastify({ logger: true })
 
-app.register(multipart)
+app.register(multipart, {
+    limits: {
+        fileSize: 20 * 1024 * 1024 // 20MB
+    }
+})
+
 
 app.register(jwt, {
     secret: process.env.JWT_SECRET || 'uma-frase-muito-secreta-aqui'
