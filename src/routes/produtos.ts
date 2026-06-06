@@ -16,7 +16,9 @@ export async function produtosRoute(app: FastifyInstance) {
         async (request, reply) => {
 
             try {
-                const produtos = await prisma.produtos.findMany()
+                const produtos = await prisma.produtos.findMany({
+                    orderBy: { nome: 'asc' }
+                })
                 return reply.status(200).send({ data: produtos })
             } catch (error) {
                 return reply.status(500).send({ error: 'Erro ao procurar produtos!!' })
