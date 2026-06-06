@@ -2,7 +2,7 @@
 
 # EG Personalizados — API de Gestão
 
-API REST para o sistema de gestão da EG Personalizados.
+API desenvolvida para o sistema de gestão da EG Personalizados, empresa da região de Santos, SP.
 
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
@@ -13,7 +13,7 @@ API REST para o sistema de gestão da EG Personalizados.
 
 ## 📋 Sobre
 
-API REST que alimenta o dashboard de gestão da EG Personalizados. Endpoints para pedidos, clientes, produtos e relatórios gerenciais.
+Projeto freelance desenvolvido para a **EG Personalizados**, empresa de produtos personalizados da região de Santos, SP. API REST com endpoints para gestão de pedidos, clientes, produtos e relatórios.
 
 ## 🚀 Como Rodar
 
