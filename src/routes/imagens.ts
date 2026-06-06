@@ -10,8 +10,6 @@ export async function imagensRoutes(app: FastifyInstance) {
             const parts = request.parts();
 
             let produto_id: string | undefined;
-            let tema_id: string | undefined;
-            let tema_criado: string | undefined;
             let fileBuffer: Buffer | undefined;
             let fileName: string | undefined;
             let mimeType: string | undefined;
@@ -25,8 +23,6 @@ export async function imagensRoutes(app: FastifyInstance) {
                         mimeType = part.mimetype;
                     } else {
                         if (part.fieldname === 'produto_id') produto_id = part.value as string;
-                        if (part.fieldname === 'tema_id') tema_id = part.value as string;
-                        if (part.fieldname === 'tema_criado') tema_criado = part.value as string;
                     }
                 }
 
@@ -44,30 +40,14 @@ export async function imagensRoutes(app: FastifyInstance) {
                 const publicUrl = `https://api.gestao.egpersonalizados.com.br/uploads/${projeto}/${fileName2}`;
 
 
-
-                let novoTema
-
-                if (tema_id === 'CRIAR' && tema_criado) {
-                    const res = await prisma.temas.create({
-                        data: {
-                            nome: String(tema_criado)
-                        }
-                    })
-
-                    novoTema = res
-                    tema_id = String(res.id)
-                }
-
-
                 const novaImagem = await prisma.imagens.create({
                     data: {
                         produto_id: Number(produto_id),
-                        tema_id: tema_id ? Number(tema_id) : null,
                         img_url: publicUrl
                     }
                 });
 
-                return reply.send({ ok: true, data: novaImagem, novoTema });
+                return reply.send({ ok: true, data: novaImagem });
 
             } catch (error) {
                 console.error('Erro no upload:', error);
@@ -85,11 +65,6 @@ export async function imagensRoutes(app: FastifyInstance) {
                     id: true,
                     img_url: true,
                     produtos: {
-                        select: {
-                            nome: true
-                        }
-                    },
-                    temas: {
                         select: {
                             nome: true
                         }

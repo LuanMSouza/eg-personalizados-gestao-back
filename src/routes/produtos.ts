@@ -5,7 +5,8 @@ type Produto = {
     id?: number,
     nome: string,
     valor: number,
-    custo: number
+    custo: number,
+    obs?: string
 }
 
 export async function produtosRoute(app: FastifyInstance) {
@@ -23,23 +24,11 @@ export async function produtosRoute(app: FastifyInstance) {
 
         })
 
-    app.get('/temas',
-        { onRequest: [app.authenticate] },
-        async (request, reply) => {
-
-            try {
-                const temas = await prisma.temas.findMany()
-                return reply.status(200).send({ data: temas })
-            } catch (error) {
-                return reply.status(500).send({ error: 'Erro ao procurar temas!!' })
-            }
-
-        })
 
     app.post('/',
         { onRequest: [app.authenticate], },
         async (request, reply) => {
-            const { nome, valor, custo } = request.body as Produto
+            const { nome, valor, custo, obs } = request.body as Produto
 
             if (!nome || !valor || !custo) {
                 return reply.status(400).send({ error: 'Todos os dados são obrigatórios!!' })
@@ -50,7 +39,8 @@ export async function produtosRoute(app: FastifyInstance) {
                     data: {
                         nome: nome,
                         preco_venda: valor,
-                        preco_custo: custo
+                        preco_custo: custo,
+                        obs: obs
                     }
                 })
 
@@ -66,7 +56,7 @@ export async function produtosRoute(app: FastifyInstance) {
         { onRequest: [app.authenticate] },
         async (request, reply) => {
 
-            const { id, nome, valor, custo } = request.body as Produto
+            const { id, nome, valor, custo, obs } = request.body as Produto
 
             try {
                 if (!id || !nome || !custo || !valor) {
@@ -78,7 +68,8 @@ export async function produtosRoute(app: FastifyInstance) {
                     data: {
                         nome: nome,
                         preco_custo: custo,
-                        preco_venda: valor
+                        preco_venda: valor,
+                        obs: obs ?? null
                     }
                 })
 

@@ -10,29 +10,20 @@ datasource db {
 model imagens {
   id         Int       @id @default(autoincrement())
   produto_id Int?
-  tema_id    Int?
   img_url    String?
   produtos   produtos? @relation(fields: [produto_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  temas      temas?    @relation(fields: [tema_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([produto_id], map: "idx_produto")
-  @@index([tema_id], map: "idx_tema")
 }
 
 model produtos {
   id          Int           @id @default(autoincrement())
   nome        String        @db.VarChar(255)
+  obs         String?       @db.VarChar(255)
   preco_venda Decimal       @db.Decimal(10, 2)
   preco_custo Decimal       @db.Decimal(10, 2)
   imagens     imagens[]
   venda_itens venda_itens[]
-}
-
-model temas {
-  id         Int       @id @default(autoincrement())
-  nome       String    @unique @db.VarChar(20)
-  created_at DateTime? @default(now()) @db.Date
-  imagens    imagens[]
 }
 
 model users {
