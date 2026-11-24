@@ -43,13 +43,14 @@ export async function produtosRoute(app: FastifyInstance) {
                         nome: nome,
                         preco_venda: valor,
                         preco_custo: custo,
-                        obs: obs,
-                        descricao: descricao
+                        obs: obs || null,
+                        descricao: descricao || null
                     }
                 })
 
                 return reply.status(201).send({ data: novoProduto })
             } catch (error) {
+                console.error('Erro ao criar produto:', error)
                 return reply.status(500).send({ error: 'Erro ao cadastrar no banco.' })
             }
 
@@ -73,8 +74,8 @@ export async function produtosRoute(app: FastifyInstance) {
                         nome: nome,
                         preco_custo: custo,
                         preco_venda: valor,
-                        obs: obs ?? null,
-                        descricao: descricao ?? null
+                        obs: obs || null,
+                        descricao: descricao || null
                     }
                 })
 

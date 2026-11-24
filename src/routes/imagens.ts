@@ -30,12 +30,20 @@ export async function imagensRoutes(app: FastifyInstance) {
                     return reply.status(400).send({ error: 'Arquivo ou ID do produto ausente.' });
                 }
 
+                if (!mimeType?.startsWith('image/')) {
+                    return reply.status(400).send({ error: 'Envie só arquivos de imagem.' });
+                }
+
                 // Alterado, vai pro VPS
 
                 const projeto = 'EGP';
-                const dir = `/var/www/uploads/${projeto}`;
+                const dir = `/var/www/egp/uploads/${projeto}`;
                 fs.mkdirSync(dir, { recursive: true });
-                const fileName2 = `${Date.now()}-${fileName}`;
+                // nome sem espaço/acento: "WhatsApp Image 2026...jpeg" virava URL com %20
+                const nomeLimpo = (fileName || 'foto.jpg')
+                    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                    .replace(/[^a-zA-Z0-9.-]+/g, '-').replace(/-+/g, '-').slice(-80);
+                const fileName2 = `${Date.now()}-${nomeLimpo}`;
                 fs.writeFileSync(`${dir}/${fileName2}`, fileBuffer);
                 const publicUrl = `https://api.gestao.egpersonalizados.com.br/uploads/${projeto}/${fileName2}`;
 
@@ -61,8 +69,10 @@ export async function imagensRoutes(app: FastifyInstance) {
         async (request, reply) => {
 
             const res = await prisma.imagens.findMany({
+                orderBy: { id: 'asc' },
                 select: {
                     id: true,
+                    produto_id: true,
                     img_url: true,
                     produtos: {
                         select: {

@@ -46,7 +46,7 @@ async function start() {
     });
 
     app.register(require('@fastify/static'), {
-        root: '/var/www/uploads',
+        root: '/var/www/egp/uploads',
         prefix: '/uploads/'
     })
 
